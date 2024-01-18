@@ -3,6 +3,12 @@ variable "acr_url" {
   description = "The Azure Container Registry for the docker image."
 }
 
+variable "allow_pat_config" {
+  type        = bool
+  description = "Whether or not to allow the usage of PATs to configure databricks"
+  default     = false
+}
+
 variable "databricks_policies" {
   type = map(object(
     {

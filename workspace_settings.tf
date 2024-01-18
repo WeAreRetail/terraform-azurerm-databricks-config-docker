@@ -6,9 +6,11 @@
 
 resource "databricks_workspace_conf" "workspace_conf" {
   custom_config = {
-    "enableDbfsFileBrowser" = true
-    "enableDcs"             = true # Container services (Docker)
-    "enableExportNotebook"  = false
-    "enableWebTerminal"     = true
+    "enableDbfsFileBrowser"   = true
+    "enableDcs"               = true # Container services (Docker)
+    "enableExportNotebook"    = false
+    "enableWebTerminal"       = false
+    "enableFileStoreEndpoint" = false
+    "enableTokensConfig"      = var.allow_pat_config
   }
 }
