@@ -7,7 +7,7 @@ module "databricks_policies" {
   can_use_group            = each.value["CAN_USE_GROUP"]
   policy_name              = each.value["POLICY_NAME"]
   databricks_version       = each.value["DATABRICKS_VERSION"]
-  docker_image_url         = "${var.acr_url}/${each.value["IMAGE_NAME"]}:${lower(var.environment)}-latest"
+  docker_image_url         = "${var.acr_url}/${each.value["IMAGE_NAME"]}:${lower(var.environment)}-current"
   docker_spn_client_id     = data.azurerm_key_vault_secret.spn_id.value
   docker_spn_client_secret = data.azurerm_key_vault_secret.spn_secret.value
   logs_path                = var.logs_path
