@@ -50,11 +50,11 @@ variable "databricks_policies" {
         },
       }
     },
-    "databricks_latest" = {
+    "databricks_current" = {
       "CAN_USE_GROUP"      = "analysts",
       "DATABRICKS_VERSION" = "12.2.x-scala2.12",
-      "IMAGE_NAME"         = "databricks-latest",
-      "POLICY_NAME"        = "Analysts cluster policy - Latest",
+      "IMAGE_NAME"         = "databricks-current",
+      "POLICY_NAME"        = "Analysts cluster policy - Current",
       "POOL"               = true #Enable only one pool
       "POLICY_OVERRIDES" = {
         "autotermination_minutes" : {
@@ -64,11 +64,11 @@ variable "databricks_policies" {
         },
       }
     }
-    "databricks_job_latest" = {
+    "databricks_job_current" = {
       "CAN_USE_GROUP"      = "analysts",
       "DATABRICKS_VERSION" = "12.2.x-scala2.12",
-      "IMAGE_NAME"         = "databricks-latest",
-      "POLICY_NAME"        = "Job cluster policy - Latest",
+      "IMAGE_NAME"         = "databricks-current",
+      "POLICY_NAME"        = "Job cluster policy - Current",
       "POOL"               = false #Enable only one pool,
       "POLICY_OVERRIDES"   = {}
     }

@@ -21,3 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial Release to open source
+
+## [1.1.0] - 2024-13-02
+
+### Modified
+
+- Name of databricks policy from latest to current

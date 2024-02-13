@@ -11,7 +11,7 @@ module "pools" {
   version = "1.0.0"
 
   databricks_version       = local.pool_to_enable["DATABRICKS_VERSION"]
-  docker_image_url         = "${var.acr_url}/${local.pool_to_enable["IMAGE_NAME"]}:${lower(var.environment)}-latest"
+  docker_image_url         = "${var.acr_url}/${local.pool_to_enable["IMAGE_NAME"]}:${lower(var.environment)}-current"
   docker_spn_client_id     = data.azurerm_key_vault_secret.spn_id.value
   docker_spn_client_secret = data.azurerm_key_vault_secret.spn_secret.value
   environment              = var.environment
