@@ -50,6 +50,20 @@ variable "databricks_policies" {
         },
       }
     },
+    "databricks_14_3" = {
+      "CAN_USE_GROUP"      = "analysts",
+      "DATABRICKS_VERSION" = "14.3.x-scala2.12",
+      "IMAGE_NAME"         = "databricks14",
+      "POLICY_NAME"        = "Analysts cluster policy - 14.3-LTS",
+      "POOL"               = false #Enable only one pool
+      "POLICY_OVERRIDES" = {
+        "autotermination_minutes" : {
+          "type" : "fixed",
+          "value" : 45,
+          "hidden" : false
+        },
+      }
+    },
     "databricks_current" = {
       "CAN_USE_GROUP"      = "analysts",
       "DATABRICKS_VERSION" = "12.2.x-scala2.12",
