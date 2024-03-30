@@ -5,31 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2024-03-30
+
+### Add an option for differentiating a policy dedicated to the jobs
+
+- Add the `IS_JOB_POLICY` option in the `databricks_policies`
+
+The policy ID is exported with a dedicated `job_policy_id` output
+Only one `IS_JOB_POLICY` can be true.
+
 ## [2.4.0] - 2024-03-21
 
-### Using new databricks policies version
+### Using the new Databricks policies version
 
-- Hide creds for acr
+- Hide credentials for ACR
 - Allow the usage of warm and spot pool cluster types
 
 ## [2.3.0] - 2024-03-19
 
 ### Added Databricks 14
 
-- Defined databricks 14 policy
+- Defined Databricks 14 policy
 
 ## [2.2.0] - 2024-03-11
 
-### Fixed availability of databricks pools
+### Fixed availability of Databricks pools
 
-- Using "SPOT_AZURE" by bumping the policy version to be inline with the current databricks pools configuration
-
+- Using "SPOT_AZURE" by bumping the policy version to be inline with the current Databricks pools configuration
 
 ## [2.1.1] - 2024-03-04
 
 ### Changed
 
-- upgraded databricks-policies-docker module to 1.1.0 to fix policy issues
+- upgraded `databricks-policies-docker` module to 1.1.0 to fix policy issues
 
 ## [2.1.0] - 2024-02-13
 
@@ -52,10 +60,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Initial Release to open source
+- Initial Release to Open Source
 
 ## [1.1.0] - 2024-13-02
 
 ### Modified
 
-- Name of databricks policy from latest to current
+- Name of the Databricks policy from latest to current

@@ -15,9 +15,10 @@ variable "databricks_policies" {
       CAN_USE_GROUP      = string
       DATABRICKS_VERSION = string
       IMAGE_NAME         = string
+      IS_JOB_POLICY      = optional(bool, false)
       POLICY_NAME        = string
-      POOL               = bool
-      POLICY_OVERRIDES   = any
+      POOL               = optional(bool, false)
+      POLICY_OVERRIDES   = optional(map(map(any)), null)
     }
   ))
   description = "The Databricks clusters policies."
@@ -83,8 +84,7 @@ variable "databricks_policies" {
       "DATABRICKS_VERSION" = "12.2.x-scala2.12",
       "IMAGE_NAME"         = "databricks-current",
       "POLICY_NAME"        = "Job cluster policy - Current",
-      "POOL"               = false #Enable only one pool,
-      "POLICY_OVERRIDES"   = {}
+      "POOL"               = false #Enable only one pool
     }
   }
 
@@ -98,6 +98,18 @@ variable "databricks_policies" {
     ) == 1
 
     error_message = "Only one policy with pool enabled"
+  }
+
+  validation {
+
+    condition = length(
+      [
+        for key, value in var.databricks_policies : value
+        if value["IS_JOB_POLICY"]
+      ]
+    ) == 1
+
+    error_message = "Only one job policy can be defined"
   }
 }
 
@@ -129,11 +141,6 @@ variable "logs_path" {
   type        = string
   description = "The clusters logs root folder."
   default     = ""
-}
-
-variable "policy_overrides" {
-  description = "Cluster policy overrides"
-  default     = {}
 }
 
 variable "tenant_id" {

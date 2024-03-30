@@ -1,6 +1,6 @@
 module "databricks_policies" {
   source  = "WeAreRetail/databricks-policies-docker/azurerm"
-  version = "1.4.0"
+  version = "1.5.1"
 
   for_each = var.databricks_policies
 
@@ -18,5 +18,16 @@ locals {
   policy_id_map = {
     for policy_key, policy in module.databricks_policies : policy_key => policy.policy_id
   }
-}
 
+  job_policy_id = one(
+    [for policy_key, policy in module.databricks_policies : policy.policy_id if policy.is_job_policy]
+  )
+
+  job_policy_name = one(
+    [for policy_key, policy in module.databricks_policies : policy.policy_name if policy.is_job_policy]
+  )
+
+  job_policy_key = one(
+    [for policy_key, policy in module.databricks_policies : policy_key if policy.is_job_policy]
+  )
+}
