@@ -18,75 +18,43 @@ variable "databricks_policies" {
       IS_JOB_POLICY      = optional(bool, false)
       POLICY_NAME        = string
       POOL               = optional(bool, false)
-      POLICY_OVERRIDES   = optional(map(map(any)), null)
+      POLICY_OVERRIDES   = optional(any, {})
     }
   ))
   description = "The Databricks clusters policies."
-  default = {
-    "databricks_12_2" = {
-      "CAN_USE_GROUP"      = "analysts",
-      "DATABRICKS_VERSION" = "12.2.x-scala2.12"
-      "IMAGE_NAME"         = "databricks12",
-      "POLICY_NAME"        = "Analysts cluster policy - 12.2-LTS",
-      "POOL"               = false #Enable only one pool
-      "POLICY_OVERRIDES" = {
-        "autotermination_minutes" : {
-          "type" : "fixed",
-          "value" : 45,
-          "hidden" : false
-        },
-      }
-    },
-    "databricks_13_3" = {
-      "CAN_USE_GROUP"      = "analysts",
-      "DATABRICKS_VERSION" = "13.3.x-scala2.12",
-      "IMAGE_NAME"         = "databricks13",
-      "POLICY_NAME"        = "Analysts cluster policy - 13.3-LTS",
-      "POOL"               = false #Enable only one pool
-      "POLICY_OVERRIDES" = {
-        "autotermination_minutes" : {
-          "type" : "fixed",
-          "value" : 45,
-          "hidden" : false
-        },
-      }
-    },
-    "databricks_14_3" = {
-      "CAN_USE_GROUP"      = "analysts",
-      "DATABRICKS_VERSION" = "14.3.x-scala2.12",
-      "IMAGE_NAME"         = "databricks14",
-      "POLICY_NAME"        = "Analysts cluster policy - 14.3-LTS",
-      "POOL"               = false #Enable only one pool
-      "POLICY_OVERRIDES" = {
-        "autotermination_minutes" : {
-          "type" : "fixed",
-          "value" : 45,
-          "hidden" : false
-        },
-      }
-    },
-    "databricks_current" = {
-      "CAN_USE_GROUP"      = "analysts",
-      "DATABRICKS_VERSION" = "12.2.x-scala2.12",
-      "IMAGE_NAME"         = "databricks-current",
-      "POLICY_NAME"        = "Analysts cluster policy - Current",
-      "POOL"               = true #Enable only one pool
-      "POLICY_OVERRIDES" = {
-        "autotermination_minutes" : {
-          "type" : "fixed",
-          "value" : 45,
-          "hidden" : false
-        },
-      }
-    }
-    "databricks_job_current" = {
-      "CAN_USE_GROUP"      = "analysts",
-      "DATABRICKS_VERSION" = "12.2.x-scala2.12",
-      "IMAGE_NAME"         = "databricks-current",
-      "POLICY_NAME"        = "Job cluster policy - Current",
-      "POOL"               = false #Enable only one pool
-    }
-  }
+
+  # Example of how to use the variable
+  #
+  # databricks_policies = {
+  #   "databricks_12_2" = {
+  #     "CAN_USE_GROUP"      = "analysts",
+  #     "DATABRICKS_VERSION" = "12.2.x-scala2.12"
+  #     "IMAGE_NAME"         = "databricks12",
+  #     "POLICY_NAME"        = "Analysts cluster policy - 12.2-LTS",
+  #     "POOL"               = false #Enable only one pool
+  #     "POLICY_OVERRIDES" = {
+  #       "autotermination_minutes" : {
+  #         "type" : "fixed",
+  #         "value" : 45,
+  #         "hidden" : false
+  #       },
+  #     }
+  #   },
+  #   "databricks_13_3" = {
+  #     "CAN_USE_GROUP"      = "analysts",
+  #     "DATABRICKS_VERSION" = "13.3.x-scala2.12",
+  #     "IMAGE_NAME"         = "databricks13",
+  #     "POLICY_NAME"        = "Analysts cluster policy - 13.3-LTS",
+  #     "POOL"               = false #Enable only one pool
+  #     "POLICY_OVERRIDES" = {
+  #       "autotermination_minutes" : {
+  #         "type" : "fixed",
+  #         "value" : 45,
+  #         "hidden" : false
+  #       }
+  #     }
+  #   }
+  # }
 
   validation {
 
@@ -97,7 +65,7 @@ variable "databricks_policies" {
       ]
     ) == 1
 
-    error_message = "Only one policy with pool enabled"
+    error_message = "One and only one policy with pool enabled"
   }
 
   validation {
@@ -107,9 +75,9 @@ variable "databricks_policies" {
         for key, value in var.databricks_policies : value
         if value["IS_JOB_POLICY"]
       ]
-    ) == 1
+    ) <= 1
 
-    error_message = "Only one job policy can be defined"
+    error_message = "Maximum one job policy can be defined"
   }
 }
 
