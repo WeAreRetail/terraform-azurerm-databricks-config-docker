@@ -116,3 +116,8 @@ variable "tenant_id" {
   description = "Tenand ID."
   default     = "8ca5b849-53e1-48cf-89fb-0103886af200"
 }
+
+variable "trigram" {
+  type        = string
+  description = "The project trigram."
+}
