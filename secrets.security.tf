@@ -26,13 +26,9 @@ resource "databricks_secret" "spn_secret" {
 
 # Static version used for docker credentials
 resource "databricks_secret" "spn_secret_docker" {
-  key          = "spn-secret"
+  key          = "acr-secret"
   string_value = data.azurerm_key_vault_secret.spn_secret.value
   scope        = databricks_secret_scope.security.name
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "databricks_secret" "spn_id_key" {
