@@ -3,6 +3,13 @@ variable "acr_url" {
   description = "The Azure Container Registry for the docker image."
 }
 
+variable "add_apps_in_groups" {
+  type        = bool
+  description = "Whether or not to add the applications in the groups. If false, the applications will only be added in the admin group."
+  default     = false
+
+}
+
 variable "allow_pat_config" {
   type        = bool
   description = "Whether or not to allow the usage of PATs to configure databricks"

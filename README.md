@@ -29,6 +29,7 @@
 | <a name="input_group_user"></a> [group\_user](#input\_group\_user) | Developpers user group (with no groups inside). | `string` | n/a | yes |
 | <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | n/a | `string` | n/a | yes |
 | <a name="input_trigram"></a> [trigram](#input\_trigram) | The project trigram. | `string` | n/a | yes |
+| <a name="input_add_apps_in_groups"></a> [add\_apps\_in\_groups](#input\_add\_apps\_in\_groups) | Whether or not to add the applications in the groups. If false, the applications will only be added in the admin group. | `bool` | `false` | no |
 | <a name="input_allow_pat_config"></a> [allow\_pat\_config](#input\_allow\_pat\_config) | Whether or not to allow the usage of PATs to configure databricks | `bool` | `false` | no |
 | <a name="input_logs_path"></a> [logs\_path](#input\_logs\_path) | The clusters logs root folder. | `string` | `""` | no |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | Tenand ID. | `string` | `"8ca5b849-53e1-48cf-89fb-0103886af200"` | no |

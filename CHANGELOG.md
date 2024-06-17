@@ -1,9 +1,18 @@
+
+<!-- markdownlint-disable-file MD024 MD041 -->
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [4.3.0] - 2024-06-06
+
+### Added
+
+Optionally add applications to `readonly` and `analysts` groups. Controlled by `add_apps_in_groups`.
+Default to false.
 
 ## [4.2.0] - 2024-06-06
 
@@ -18,7 +27,6 @@ Remove create before destroy.
 Static SPN secret.
 Reference to secrets for docker credentials so that rotations don't break clusters anymore.
 
-
 ## [4.0.0] - 2024-05-10
 
 ### Added
@@ -29,12 +37,11 @@ Add a metadata store to hold the project trigram and the runtime environment.
 
 Add the `trigram` variable containing the project trigram to the module.
 
-
 ## [3.0.0] - 2024-04-08
 
 ### Breaking change
 
-Disable Photon by default. Due to "WeAreRetail/databricks-policies-docker/azurerm" update.
+Disable Photon by default. Due to `WeAreRetail/databricks-policies-docker/azurerm` update.
 
 ### Fix
 
@@ -72,7 +79,7 @@ Only one `IS_JOB_POLICY` can be true.
 
 ### Fixed availability of Databricks pools
 
-- Using "SPOT_AZURE" by bumping the policy version to be inline with the current Databricks pools configuration
+- Using "SPOT_AZURE" by bumping the policy version to be in line with the current Databricks pools configuration
 
 ## [2.1.1] - 2024-03-04
 

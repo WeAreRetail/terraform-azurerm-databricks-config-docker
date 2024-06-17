@@ -117,29 +117,65 @@ resource "databricks_user" "all_users" {
 
 
 ##################################
-# DELIVERY SPNS
+# SPNs in groups
 ##################################
 
-data "azuread_group" "app" {
+data "azuread_group" "app_admin" {
   display_name     = var.group_admin
   security_enabled = true
 }
 
+data "azuread_group" "app_read" {
+  display_name     = var.group_read
+  security_enabled = true
+}
+
+data "azuread_group" "app_user" {
+  display_name     = var.group_user
+  security_enabled = true
+}
+
 data "azuread_service_principals" "admin" {
-  object_ids     = toset(data.azuread_group.app.members)
+  object_ids     = toset(data.azuread_group.app_admin.members)
   ignore_missing = true
 }
 
+data "azuread_service_principals" "read" {
+  object_ids     = toset(data.azuread_group.app_read.members)
+  ignore_missing = true
+}
+
+data "azuread_service_principals" "user" {
+  object_ids     = toset(data.azuread_group.app_user.members)
+  ignore_missing = true
+}
+
+locals {
+  # Alls SPN except creator SPN (current) who is already admin
+  app_admin_map = { for k, v in data.azuread_service_principals.admin.service_principals : v.application_id => v.display_name }
+  app_read_map  = var.add_apps_in_groups ? { for k, v in data.azuread_service_principals.read.service_principals : v.application_id => v.display_name } : {}
+  app_user_map  = var.add_apps_in_groups ? { for k, v in data.azuread_service_principals.user.service_principals : v.application_id => v.display_name } : {}
+}
+
 resource "databricks_service_principal" "admins" {
-  for_each       = local.app_map
+  for_each       = local.app_admin_map
   application_id = each.key
   display_name   = each.value
   force          = true
 }
 
-locals {
-  # Alls SPN except creator SPN (current) who is already admin
-  app_map = { for k, v in data.azuread_service_principals.admin.service_principals : v.application_id => v.display_name }
+resource "databricks_service_principal" "read" {
+  for_each       = local.app_read_map
+  application_id = each.key
+  display_name   = each.value
+  force          = true
+}
+
+resource "databricks_service_principal" "user" {
+  for_each       = local.app_user_map
+  application_id = each.key
+  display_name   = each.value
+  force          = true
 }
 
 resource "databricks_group_member" "app-are-admin" {
@@ -147,5 +183,21 @@ resource "databricks_group_member" "app-are-admin" {
     for k, r in databricks_service_principal.admins : k => r
   }
   group_id  = data.databricks_group.admins.id
+  member_id = each.value.id
+}
+
+resource "databricks_group_member" "app-are-read" {
+  for_each = {
+    for k, r in databricks_service_principal.read : k => r
+  }
+  group_id  = databricks_group.readonly.id
+  member_id = each.value.id
+}
+
+resource "databricks_group_member" "app-are-user" {
+  for_each = {
+    for k, r in databricks_service_principal.user : k => r
+  }
+  group_id  = databricks_group.analysts.id
   member_id = each.value.id
 }
