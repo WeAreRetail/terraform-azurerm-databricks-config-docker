@@ -28,6 +28,7 @@
 | <a name="input_group_read"></a> [group\_read](#input\_group\_read) | Read only users user group (with no groups inside). | `string` | n/a | yes |
 | <a name="input_group_user"></a> [group\_user](#input\_group\_user) | Developpers user group (with no groups inside). | `string` | n/a | yes |
 | <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | n/a | `string` | n/a | yes |
+| <a name="input_pools"></a> [pools](#input\_pools) | Pool definition. | <pre>map(object({<br>    spot_pool_max_capacity = number<br>    spot_pool_name         = string<br>    spot_pool_sku          = string<br>    warm_pool_max_capacity = number<br>    warm_pool_name         = string<br>    warm_pool_sku          = string<br>  }))</pre> | n/a | yes |
 | <a name="input_trigram"></a> [trigram](#input\_trigram) | The project trigram. | `string` | n/a | yes |
 | <a name="input_add_apps_in_groups"></a> [add\_apps\_in\_groups](#input\_add\_apps\_in\_groups) | Whether or not to add the applications in the groups. If false, the applications will only be added in the admin group. | `bool` | `false` | no |
 | <a name="input_allow_pat_config"></a> [allow\_pat\_config](#input\_allow\_pat\_config) | Whether or not to allow the usage of PATs to configure databricks | `bool` | `false` | no |
@@ -46,8 +47,8 @@
 | <a name="output_job_policy_name"></a> [job\_policy\_name](#output\_job\_policy\_name) | The job policy name if defined, else null. |
 | <a name="output_policy_ids"></a> [policy\_ids](#output\_policy\_ids) | Map of the policy IDs that have been created. The key is the policy key and the value is the policy ID. |
 | <a name="output_pool_databricks_runtime"></a> [pool\_databricks\_runtime](#output\_pool\_databricks\_runtime) | The pools' Databricks runtime version. |
-| <a name="output_pool_spot_id"></a> [pool\_spot\_id](#output\_pool\_spot\_id) | The warm pool id |
-| <a name="output_pool_warm_id"></a> [pool\_warm\_id](#output\_pool\_warm\_id) | The spot pool id |
+| <a name="output_pool_spot_ids"></a> [pool\_spot\_ids](#output\_pool\_spot\_ids) | The warm pool id |
+| <a name="output_pool_warm_ids"></a> [pool\_warm\_ids](#output\_pool\_warm\_ids) | The spot pool id |
 | <a name="output_security_scope"></a> [security\_scope](#output\_security\_scope) | Databricks security scope name. |
 | <a name="output_spn_id_value"></a> [spn\_id\_value](#output\_spn\_id\_value) | SPN ID value |
 | <a name="output_spn_secret_key"></a> [spn\_secret\_key](#output\_spn\_secret\_key) | SPN Secret key. |

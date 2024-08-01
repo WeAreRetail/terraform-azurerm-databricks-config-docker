@@ -31,13 +31,17 @@ output "pool_databricks_runtime" {
   description = "The pools' Databricks runtime version."
 }
 
-output "pool_spot_id" {
-  value       = module.pools.pool_spot_id
+output "pool_spot_ids" {
+  value = {
+    for name, pool in module.pools : name => pool.pool_spot_id
+  }
   description = "The warm pool id"
 }
 
-output "pool_warm_id" {
-  value       = module.pools.pool_warm_id
+output "pool_warm_ids" {
+  value = {
+    for name, pool in module.pools : name => pool.pool_warm_id
+  }
   description = "The spot pool id"
 }
 

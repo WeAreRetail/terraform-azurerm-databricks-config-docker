@@ -118,6 +118,18 @@ variable "logs_path" {
   default     = ""
 }
 
+variable "pools" {
+  description = "Pool definition."
+  type = map(object({
+    spot_pool_max_capacity = number
+    spot_pool_name         = string
+    spot_pool_sku          = string
+    warm_pool_max_capacity = number
+    warm_pool_name         = string
+    warm_pool_sku          = string
+  }))
+}
+
 variable "tenant_id" {
   type        = string
   description = "Tenand ID."
@@ -128,3 +140,4 @@ variable "trigram" {
   type        = string
   description = "The project trigram."
 }
+
