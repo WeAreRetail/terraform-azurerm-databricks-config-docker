@@ -1,6 +1,6 @@
 module "databricks_policies" {
   source  = "WeAreRetail/databricks-policies-docker/azurerm"
-  version = "2.5.2"
+  version = "3.0.1"
 
   for_each = var.databricks_policies
 
