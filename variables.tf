@@ -141,3 +141,8 @@ variable "trigram" {
   description = "The project trigram."
 }
 
+variable "unity_enabled" {
+  type        = bool
+  default     = false
+  description = "Decides whether unity is enabled or not, which changes the default policy attributes."
+}

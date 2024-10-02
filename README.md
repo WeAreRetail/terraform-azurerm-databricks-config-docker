@@ -22,18 +22,19 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_acr_url"></a> [acr\_url](#input\_acr\_url) | The Azure Container Registry for the docker image. | `string` | n/a | yes |
-| <a name="input_databricks_policies"></a> [databricks\_policies](#input\_databricks\_policies) | The Databricks clusters policies. | <pre>map(object(<br>    {<br>      CAN_USE_GROUP      = string<br>      DATABRICKS_VERSION = string<br>      IMAGE_NAME         = string<br>      IS_JOB_POLICY      = optional(bool, false)<br>      POLICY_NAME        = string<br>      POOL               = optional(bool, false)<br>      POLICY_OVERRIDES   = optional(any, {})<br>    }<br>  ))</pre> | n/a | yes |
+| <a name="input_databricks_policies"></a> [databricks\_policies](#input\_databricks\_policies) | The Databricks clusters policies. | <pre>map(object(<br/>    {<br/>      CAN_USE_GROUP      = string<br/>      DATABRICKS_VERSION = string<br/>      IMAGE_NAME         = string<br/>      IS_JOB_POLICY      = optional(bool, false)<br/>      POLICY_NAME        = string<br/>      POOL               = optional(bool, false)<br/>      POLICY_OVERRIDES   = optional(any, {})<br/>    }<br/>  ))</pre> | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | The infrastructure environment. | `string` | n/a | yes |
 | <a name="input_group_admin"></a> [group\_admin](#input\_group\_admin) | Administrators user group (with no groups inside). | `string` | n/a | yes |
 | <a name="input_group_read"></a> [group\_read](#input\_group\_read) | Read only users user group (with no groups inside). | `string` | n/a | yes |
 | <a name="input_group_user"></a> [group\_user](#input\_group\_user) | Developpers user group (with no groups inside). | `string` | n/a | yes |
 | <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | n/a | `string` | n/a | yes |
-| <a name="input_pools"></a> [pools](#input\_pools) | Pool definition. | <pre>map(object({<br>    spot_pool_max_capacity = number<br>    spot_pool_name         = string<br>    spot_pool_sku          = string<br>    warm_pool_max_capacity = number<br>    warm_pool_name         = string<br>    warm_pool_sku          = string<br>  }))</pre> | n/a | yes |
+| <a name="input_pools"></a> [pools](#input\_pools) | Pool definition. | <pre>map(object({<br/>    spot_pool_max_capacity = number<br/>    spot_pool_name         = string<br/>    spot_pool_sku          = string<br/>    warm_pool_max_capacity = number<br/>    warm_pool_name         = string<br/>    warm_pool_sku          = string<br/>  }))</pre> | n/a | yes |
 | <a name="input_trigram"></a> [trigram](#input\_trigram) | The project trigram. | `string` | n/a | yes |
 | <a name="input_add_apps_in_groups"></a> [add\_apps\_in\_groups](#input\_add\_apps\_in\_groups) | Whether or not to add the applications in the groups. If false, the applications will only be added in the admin group. | `bool` | `false` | no |
 | <a name="input_allow_pat_config"></a> [allow\_pat\_config](#input\_allow\_pat\_config) | Whether or not to allow the usage of PATs to configure databricks | `bool` | `false` | no |
 | <a name="input_logs_path"></a> [logs\_path](#input\_logs\_path) | The clusters logs root folder. | `string` | `""` | no |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | Tenand ID. | `string` | `"8ca5b849-53e1-48cf-89fb-0103886af200"` | no |
+| <a name="input_unity_enabled"></a> [unity\_enabled](#input\_unity\_enabled) | Decides whether unity is enabled or not, which changes the default policy attributes. | `bool` | `false` | no |
 
 #### Outputs
 

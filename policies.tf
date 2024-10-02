@@ -1,6 +1,6 @@
 module "databricks_policies" {
   source  = "WeAreRetail/databricks-policies-docker/azurerm"
-  version = "3.0.1"
+  version = "3.1.0"
 
   for_each = var.databricks_policies
 
@@ -13,6 +13,7 @@ module "databricks_policies" {
   is_job_policy            = each.value["IS_JOB_POLICY"]
   logs_path                = var.logs_path
   policy_overrides         = each.value["POLICY_OVERRIDES"]
+  unity_enabled            = var.unity_enabled
 }
 
 locals {
