@@ -11,7 +11,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.0 |
 | <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | >= 2.0.0 |
 | <a name="requirement_azurecaf"></a> [azurecaf](#requirement\_azurecaf) | >= 1.2.16 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.0.2 |
@@ -24,25 +24,30 @@
 | <a name="input_acr_url"></a> [acr\_url](#input\_acr\_url) | The Azure Container Registry for the docker image. | `string` | n/a | yes |
 | <a name="input_databricks_policies"></a> [databricks\_policies](#input\_databricks\_policies) | The Databricks clusters policies. | <pre>map(object(<br/>    {<br/>      CAN_USE_GROUP      = string<br/>      DATABRICKS_VERSION = string<br/>      IMAGE_NAME         = string<br/>      IS_JOB_POLICY      = optional(bool, false)<br/>      POLICY_NAME        = string<br/>      POOL               = optional(bool, false)<br/>      POLICY_OVERRIDES   = optional(any, {})<br/>    }<br/>  ))</pre> | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | The infrastructure environment. | `string` | n/a | yes |
-| <a name="input_group_admin"></a> [group\_admin](#input\_group\_admin) | Administrators user group (with no groups inside). | `string` | n/a | yes |
-| <a name="input_group_read"></a> [group\_read](#input\_group\_read) | Read only users user group (with no groups inside). | `string` | n/a | yes |
-| <a name="input_group_user"></a> [group\_user](#input\_group\_user) | Developpers user group (with no groups inside). | `string` | n/a | yes |
-| <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | n/a | `string` | n/a | yes |
+| <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | The key vault id. | `string` | n/a | yes |
 | <a name="input_pools"></a> [pools](#input\_pools) | Pool definition. | <pre>map(object({<br/>    spot_pool_max_capacity = number<br/>    spot_pool_name         = string<br/>    spot_pool_sku          = string<br/>    warm_pool_max_capacity = number<br/>    warm_pool_name         = string<br/>    warm_pool_sku          = string<br/>  }))</pre> | n/a | yes |
 | <a name="input_trigram"></a> [trigram](#input\_trigram) | The project trigram. | `string` | n/a | yes |
+| <a name="input_acr_uses_application_spn"></a> [acr\_uses\_application\_spn](#input\_acr\_uses\_application\_spn) | Whether or not the ACR uses an application service principal. If true the images pull will use the application service principal. If false, it will uses the well-known service principal. | `bool` | `true` | no |
 | <a name="input_add_apps_in_groups"></a> [add\_apps\_in\_groups](#input\_add\_apps\_in\_groups) | Whether or not to add the applications in the groups. If false, the applications will only be added in the admin group. | `bool` | `false` | no |
 | <a name="input_allow_pat_config"></a> [allow\_pat\_config](#input\_allow\_pat\_config) | Whether or not to allow the usage of PATs to configure databricks | `bool` | `false` | no |
+| <a name="input_data_scope"></a> [data\_scope](#input\_data\_scope) | The data scope of the Databricks workspace. It is used to determine the permissions. | `string` | `"NONE"` | no |
+| <a name="input_group_admin"></a> [group\_admin](#input\_group\_admin) | Administrators user group (with no groups inside). Not required after Unity migration. | `string` | `"set_if_unity_permissions_migration_is_true"` | no |
+| <a name="input_group_read"></a> [group\_read](#input\_group\_read) | Read only users user group (with no groups inside). Not required after Unity migration. | `string` | `"set_if_unity_permissions_migration_is_true"` | no |
+| <a name="input_group_user"></a> [group\_user](#input\_group\_user) | Developers user group (with no groups inside). Not required after Unity migration. | `string` | `"set_if_unity_permissions_migration_is_true"` | no |
 | <a name="input_logs_path"></a> [logs\_path](#input\_logs\_path) | The clusters logs root folder. | `string` | `""` | no |
-| <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | Tenand ID. | `string` | `"8ca5b849-53e1-48cf-89fb-0103886af200"` | no |
+| <a name="input_telemetry_connection_string"></a> [telemetry\_connection\_string](#input\_telemetry\_connection\_string) | The connection string to the telemetry. | `string` | `"telemetry_not_set"` | no |
+| <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | Tenant ID. | `string` | `"8ca5b849-53e1-48cf-89fb-0103886af200"` | no |
 | <a name="input_unity_enabled"></a> [unity\_enabled](#input\_unity\_enabled) | Decides whether unity is enabled or not, which changes the default policy attributes. | `bool` | `false` | no |
+| <a name="input_unity_permissions"></a> [unity\_permissions](#input\_unity\_permissions) | Switch to the Unity permissions approach. | `bool` | `false` | no |
+| <a name="input_unity_permissions_migration"></a> [unity\_permissions\_migration](#input\_unity\_permissions\_migration) | During the migration to Unity permissions, both the old (flattened groups) and new permissions (Unity groups) are set. | `string` | `true` | no |
 
 #### Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_analyst_group_name"></a> [analyst\_group\_name](#output\_analyst\_group\_name) | n/a |
+| <a name="output_analyst_group_name"></a> [analyst\_group\_name](#output\_analyst\_group\_name) | Databricks Analysts group name. |
 | <a name="output_databricks_group_analysts"></a> [databricks\_group\_analysts](#output\_databricks\_group\_analysts) | Databricks Analysts group. |
-| <a name="output_group_read_name"></a> [group\_read\_name](#output\_group\_read\_name) | n/a |
+| <a name="output_group_read_name"></a> [group\_read\_name](#output\_group\_read\_name) | Databricks Read group name. |
 | <a name="output_job_policy_id"></a> [job\_policy\_id](#output\_job\_policy\_id) | The job policy ID if defined, else null. |
 | <a name="output_job_policy_key"></a> [job\_policy\_key](#output\_job\_policy\_key) | The job policy key if defined, else null. |
 | <a name="output_job_policy_name"></a> [job\_policy\_name](#output\_job\_policy\_name) | The job policy name if defined, else null. |
@@ -53,4 +58,5 @@
 | <a name="output_security_scope"></a> [security\_scope](#output\_security\_scope) | Databricks security scope name. |
 | <a name="output_spn_id_value"></a> [spn\_id\_value](#output\_spn\_id\_value) | SPN ID value |
 | <a name="output_spn_secret_key"></a> [spn\_secret\_key](#output\_spn\_secret\_key) | SPN Secret key. |
+| <a name="output_users_scope"></a> [users\_scope](#output\_users\_scope) | Databricks users scope name. |
 <!-- END_TF_DOCS -->

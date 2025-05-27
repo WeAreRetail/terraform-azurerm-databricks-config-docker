@@ -1,4 +1,8 @@
-# Application Identity infos
+# Retrieve the secrets from Azure Key Vault
+
+data "azurerm_key_vault_secrets" "keyvault_secrets" {
+  key_vault_id = var.key_vault_id
+}
 
 data "azurerm_key_vault_secret" "spn_id" {
   name         = "spn-application-id"

@@ -3,6 +3,12 @@ variable "acr_url" {
   description = "The Azure Container Registry for the docker image."
 }
 
+variable "acr_uses_application_spn" {
+  type        = bool
+  description = "Whether or not the ACR uses an application service principal. If true the images pull will use the application service principal. If false, it will uses the well-known service principal."
+  default     = true
+}
+
 variable "add_apps_in_groups" {
   type        = bool
   description = "Whether or not to add the applications in the groups. If false, the applications will only be added in the admin group."
@@ -14,6 +20,16 @@ variable "allow_pat_config" {
   type        = bool
   description = "Whether or not to allow the usage of PATs to configure databricks"
   default     = false
+}
+
+variable "data_scope" {
+  type = string
+  validation {
+    condition     = contains(["AWARE", "ITM", "LDIT", "MANAGEMENT", "NONE"], upper(var.data_scope))
+    error_message = "${var.data_scope} is not a valid scope (AWARE, ITM, LDIT) or tech scope MANAGEMENT"
+  }
+  description = "The data scope of the Databricks workspace. It is used to determine the permissions."
+  default     = "NONE"
 }
 
 variable "databricks_policies" {
@@ -95,21 +111,25 @@ variable "environment" {
 
 variable "group_admin" {
   type        = string
-  description = "Administrators user group (with no groups inside)."
+  description = "Administrators user group (with no groups inside). Not required after Unity migration."
+  default     = "set_if_unity_permissions_migration_is_true"
 }
 
 variable "group_read" {
   type        = string
-  description = "Read only users user group (with no groups inside)."
+  description = "Read only users user group (with no groups inside). Not required after Unity migration."
+  default     = "set_if_unity_permissions_migration_is_true"
 }
 
 variable "group_user" {
   type        = string
-  description = "Developpers user group (with no groups inside)."
+  description = "Developers user group (with no groups inside). Not required after Unity migration."
+  default     = "set_if_unity_permissions_migration_is_true"
 }
 
 variable "key_vault_id" {
-  type = string
+  type        = string
+  description = "The key vault id."
 }
 
 variable "logs_path" {
@@ -130,9 +150,15 @@ variable "pools" {
   }))
 }
 
+variable "telemetry_connection_string" {
+  type        = string
+  description = "The connection string to the telemetry."
+  default     = "telemetry_not_set"
+}
+
 variable "tenant_id" {
   type        = string
-  description = "Tenand ID."
+  description = "Tenant ID."
   default     = "8ca5b849-53e1-48cf-89fb-0103886af200"
 }
 
@@ -145,4 +171,16 @@ variable "unity_enabled" {
   type        = bool
   default     = false
   description = "Decides whether unity is enabled or not, which changes the default policy attributes."
+}
+
+variable "unity_permissions" {
+  type        = bool
+  default     = false
+  description = "Switch to the Unity permissions approach."
+}
+
+variable "unity_permissions_migration" {
+  type        = string
+  description = "During the migration to Unity permissions, both the old (flattened groups) and new permissions (Unity groups) are set."
+  default     = true
 }

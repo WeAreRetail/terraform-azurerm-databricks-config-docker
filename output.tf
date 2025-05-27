@@ -1,14 +1,16 @@
 output "analyst_group_name" {
-  value = databricks_group.analysts.display_name
+  value       = var.unity_permissions_migration ? databricks_group.analysts[0].display_name : "Not_Analysts_Group_With_Unity"
+  description = "Databricks Analysts group name."
 }
 
 output "databricks_group_analysts" {
-  value       = databricks_group.analysts
+  value       = var.unity_permissions_migration ? databricks_group.analysts[0] : {}
   description = "Databricks Analysts group."
 }
 
 output "group_read_name" {
-  value = databricks_group.readonly
+  value       = var.unity_permissions_migration ? databricks_group.readonly[0] : {}
+  description = "Databricks Read group name."
 }
 
 output "job_policy_id" {
@@ -63,4 +65,9 @@ output "spn_id_value" {
 output "spn_secret_key" {
   value       = databricks_secret.spn_secret.key
   description = "SPN Secret key."
+}
+
+output "users_scope" {
+  value       = "users"
+  description = "Databricks users scope name."
 }

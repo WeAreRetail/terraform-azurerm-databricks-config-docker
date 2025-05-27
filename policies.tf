@@ -8,8 +8,8 @@ module "databricks_policies" {
   policy_name              = each.value["POLICY_NAME"]
   databricks_version       = each.value["DATABRICKS_VERSION"]
   docker_image_url         = "${var.acr_url}/${each.value["IMAGE_NAME"]}:${lower(var.environment)}-current"
-  docker_spn_client_id     = "{{secrets/security/spn-id}}"
-  docker_spn_client_secret = "{{secrets/security/acr-secret}}"
+  docker_spn_client_id     = var.acr_uses_application_spn ? "{{secrets/security/spn-id}}" : "{{secrets/registry/acr-username}}"
+  docker_spn_client_secret = var.acr_uses_application_spn ? "{{secrets/security/acr-secret}}" : "{{secrets/registry/acr-password}}"
   is_job_policy            = each.value["IS_JOB_POLICY"]
   logs_path                = var.logs_path
   policy_overrides         = each.value["POLICY_OVERRIDES"]
