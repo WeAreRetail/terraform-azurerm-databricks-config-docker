@@ -6,13 +6,15 @@ data "databricks_group" "admins" {
 }
 
 data "azuread_group" "admin" {
-  count            = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   display_name     = var.group_admin
   security_enabled = true
 }
 
 data "azuread_users" "admin" {
-  count          = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   object_ids     = data.azuread_group.admin[0].members
   ignore_missing = true
 }
@@ -26,6 +28,7 @@ resource "databricks_group_member" "i-am-admin" {
   for_each = var.unity_permissions_migration ? {
     for k, r in databricks_user.all_users : k => r if contains(local.admin_set, k)
   } : {}
+
   group_id  = data.databricks_group.admins.id
   member_id = each.value.id
 
@@ -38,18 +41,21 @@ resource "databricks_group_member" "i-am-admin" {
 # DEVELOPERS USERS
 ##########################
 resource "databricks_group" "analysts" {
-  count        = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   display_name = "analysts"
 }
 
 data "azuread_group" "user" {
-  count            = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   display_name     = var.group_user
   security_enabled = true
 }
 
 data "azuread_users" "users" {
-  count          = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   object_ids     = data.azuread_group.user[0].members
   ignore_missing = true
 }
@@ -82,7 +88,8 @@ moved {
 ##################################
 
 resource "databricks_group" "readonly" {
-  count        = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   display_name = "readonly"
 }
 
@@ -92,13 +99,15 @@ moved {
 }
 
 data "azuread_group" "readonly" {
-  count            = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   display_name     = var.group_read
   security_enabled = true
 }
 
 data "azuread_users" "readonly" {
-  count          = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   object_ids     = toset(data.azuread_group.readonly[0].members)
   ignore_missing = true
 }
@@ -112,6 +121,7 @@ resource "databricks_group_member" "i-am-readonly" {
   for_each = var.unity_permissions_migration ? {
     for k, r in databricks_user.all_users : k => r if contains(local.readonly_set, k)
   } : {}
+
   group_id  = databricks_group.readonly[0].id
   member_id = each.value.id
 
@@ -124,7 +134,8 @@ resource "databricks_group_member" "i-am-readonly" {
 # ALL USERS CREATION
 ##################################
 resource "databricks_user" "all_users" {
-  for_each              = var.unity_permissions_migration ? merge(local.readonly_map, local.user_map, local.admin_map) : {}
+  for_each = var.unity_permissions_migration ? merge(local.readonly_map, local.user_map, local.admin_map) : {}
+
   provider              = databricks
   user_name             = each.value.user_principal_name
   display_name          = each.value.display_name

@@ -19,7 +19,8 @@ moved {
 }
 
 resource "databricks_secret_acl" "security_unity" {
-  count      = var.unity_permissions ? 1 : 0 # Only if Unity permissions are enabled.
+  count = var.unity_permissions ? 1 : 0 # Only if Unity permissions are enabled.
+
   principal  = "users"
   permission = "READ"
   scope      = databricks_secret_scope.security.name
@@ -28,8 +29,10 @@ resource "databricks_secret_acl" "security_unity" {
 # Databricks secret register
 
 resource "databricks_secret" "spn_secret" {
-  key          = "spn-secret_${data.azurerm_key_vault_secret.spn_secret.version}"
-  string_value = data.azurerm_key_vault_secret.spn_secret.value
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
+  key          = "spn-secret_${data.azurerm_key_vault_secret.spn_secret[0].version}"
+  string_value = data.azurerm_key_vault_secret.spn_secret[0].value
   scope        = databricks_secret_scope.security.name
 
   lifecycle {
@@ -39,29 +42,25 @@ resource "databricks_secret" "spn_secret" {
 
 # Static version used for docker credentials
 resource "databricks_secret" "spn_secret_docker" {
+  count = var.unity_permissions_migration && var.acr_uses_application_spn ? 1 : 0
+
   key          = "acr-secret"
-  string_value = data.azurerm_key_vault_secret.spn_secret.value
+  string_value = data.azurerm_key_vault_secret.spn_secret[0].value
   scope        = databricks_secret_scope.security.name
 }
 
 resource "databricks_secret" "spn_id_key" {
-  key          = "spn-id"
-  string_value = data.azurerm_key_vault_secret.spn_id.value
-  scope        = databricks_secret_scope.security.name
+  count = var.unity_permissions_migration ? 1 : 0
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  key          = "spn-id"
+  string_value = data.azurerm_key_vault_secret.spn_id[0].value
+  scope        = databricks_secret_scope.security.name
 }
 
 resource "databricks_secret" "tenant_id" {
   key          = "tenant-id"
   string_value = var.tenant_id
   scope        = databricks_secret_scope.security.name
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "databricks_secret" "client_id" {

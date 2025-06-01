@@ -1,15 +1,15 @@
 output "analyst_group_name" {
-  value       = var.unity_permissions_migration ? databricks_group.analysts[0].display_name : "Not_Analysts_Group_With_Unity"
+  value       = var.unity_permissions_migration ? databricks_group.analysts[0].display_name : null
   description = "Databricks Analysts group name."
 }
 
 output "databricks_group_analysts" {
-  value       = var.unity_permissions_migration ? databricks_group.analysts[0] : {}
+  value       = var.unity_permissions_migration ? databricks_group.analysts[0] : null
   description = "Databricks Analysts group."
 }
 
 output "group_read_name" {
-  value       = var.unity_permissions_migration ? databricks_group.readonly[0] : {}
+  value       = var.unity_permissions_migration ? databricks_group.readonly[0] : null
   description = "Databricks Read group name."
 }
 
@@ -58,12 +58,12 @@ output "security_scope" {
 }
 
 output "spn_id_value" {
-  value       = data.azurerm_key_vault_secret.spn_id.value
+  value       = var.unity_permissions_migration ? data.azurerm_key_vault_secret.spn_id[0].value : null
   description = "SPN ID value"
 }
 
 output "spn_secret_key" {
-  value       = databricks_secret.spn_secret.key
+  value       = var.unity_permissions_migration ? databricks_secret.spn_secret[0].key : null
   description = "SPN Secret key."
 }
 

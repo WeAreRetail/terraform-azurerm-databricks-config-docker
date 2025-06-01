@@ -11,7 +11,6 @@ data "azurerm_resources" "databricks_identities" {
 }
 
 data "azurerm_user_assigned_identity" "databricks" {
-
   for_each = { for k in data.azurerm_resources.databricks_identities.resources : k.id => k }
 
   name                = each.value.name

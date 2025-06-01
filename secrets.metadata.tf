@@ -8,7 +8,8 @@ resource "databricks_secret_scope" "metadata" {
 }
 
 resource "databricks_secret_acl" "metadata" {
-  count      = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+  count = var.unity_permissions_migration ? 1 : 0 # Only if migration is enabled.
+
   principal  = databricks_group.analysts[0].display_name
   permission = "READ"
   scope      = databricks_secret_scope.metadata.name
@@ -20,7 +21,8 @@ moved {
 }
 
 resource "databricks_secret_acl" "metadata_unity" {
-  count      = var.unity_permissions ? 1 : 0 # Only if Unity permissions are enabled.
+  count = var.unity_permissions ? 1 : 0 # Only if Unity permissions are enabled.
+
   principal  = "users"
   permission = "READ"
   scope      = databricks_secret_scope.metadata.name
@@ -33,10 +35,6 @@ resource "databricks_secret" "environment" {
   key          = "ENVIRONMENT"
   string_value = upper(var.environment)
   scope        = databricks_secret_scope.metadata.name
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 # The project trigram.
@@ -44,8 +42,4 @@ resource "databricks_secret" "trigram" {
   key          = "TRIGRAM"
   string_value = upper(var.trigram)
   scope        = databricks_secret_scope.metadata.name
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
