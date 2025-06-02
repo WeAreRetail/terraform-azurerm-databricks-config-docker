@@ -14,22 +14,37 @@ output "group_read_name" {
 }
 
 output "job_policy_id" {
-  value       = local.job_policy_id
-  description = "The job policy ID if defined, else null."
+  value       = var.unity_permissions_migration ? local.job_policy_id_unity_disabled : local.job_policy_id_unity_enabled
+  description = "The job policy ID if defined, else null. If unity_permissions_migration is true, it will return the ID for the policy without Unity."
 }
 
 output "job_policy_key" {
-  value       = local.job_policy_key
-  description = "The job policy key if defined, else null."
+  value       = var.unity_permissions_migration ? local.job_policy_key_unity_disabled : local.job_policy_key_unity_enabled
+  description = "The job policy key if defined, else null. If unity_permissions_migration is true, it will return the ID for the policy without Unity."
 }
 
 output "job_policy_name" {
-  value       = local.job_policy_name
+  value       = var.unity_permissions_migration ? local.job_policy_name_unity_disabled : local.job_policy_name_unity_enabled
+  description = "The job policy name if defined, else null. If unity_permissions_migration is true, it will return the ID for the policy without Unity."
+}
+
+output "job_policy_id_unity" {
+  value       = local.job_policy_id_unity_enabled
+  description = "The job policy ID if defined, else null."
+}
+
+output "job_policy_key_unity" {
+  value       = local.job_policy_key_unity_enabled
+  description = "The job policy key if defined, else null."
+}
+
+output "job_policy_name_unity" {
+  value       = local.job_policy_name_unity_enabled
   description = "The job policy name if defined, else null."
 }
 
 output "pool_databricks_runtime" {
-  value       = local.pool_to_enable["DATABRICKS_VERSION"]
+  value       = local.pool_databricks_policy["DATABRICKS_VERSION"]
   description = "The pools' Databricks runtime version."
 }
 

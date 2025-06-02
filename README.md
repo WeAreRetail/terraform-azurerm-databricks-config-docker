@@ -22,7 +22,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_acr_url"></a> [acr\_url](#input\_acr\_url) | The Azure Container Registry for the docker image. | `string` | n/a | yes |
-| <a name="input_databricks_policies"></a> [databricks\_policies](#input\_databricks\_policies) | The Databricks clusters policies. | <pre>map(object(<br/>    {<br/>      CAN_USE_GROUP      = string<br/>      DATABRICKS_VERSION = string<br/>      IMAGE_NAME         = string<br/>      IS_JOB_POLICY      = optional(bool, false)<br/>      POLICY_NAME        = string<br/>      POOL               = optional(bool, false)<br/>      POLICY_OVERRIDES   = optional(any, {})<br/>    }<br/>  ))</pre> | n/a | yes |
+| <a name="input_databricks_policies"></a> [databricks\_policies](#input\_databricks\_policies) | The Databricks clusters policies. | <pre>map(object(<br/>    {<br/>      CAN_USE_GROUP      = string<br/>      DATABRICKS_VERSION = string<br/>      IMAGE_NAME         = string<br/>      IS_JOB_POLICY      = optional(bool, false)<br/>      POLICY_NAME        = string<br/>      POLICY_OVERRIDES   = optional(any, {})<br/>      POOL               = optional(bool, false)<br/>    }<br/>  ))</pre> | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | The infrastructure environment. | `string` | n/a | yes |
 | <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | The key vault id. | `string` | n/a | yes |
 | <a name="input_pools"></a> [pools](#input\_pools) | Pool definition. | <pre>map(object({<br/>    spot_pool_max_capacity = number<br/>    spot_pool_name         = string<br/>    spot_pool_sku          = string<br/>    warm_pool_max_capacity = number<br/>    warm_pool_name         = string<br/>    warm_pool_sku          = string<br/>  }))</pre> | n/a | yes |
@@ -48,9 +48,12 @@
 | <a name="output_analyst_group_name"></a> [analyst\_group\_name](#output\_analyst\_group\_name) | Databricks Analysts group name. |
 | <a name="output_databricks_group_analysts"></a> [databricks\_group\_analysts](#output\_databricks\_group\_analysts) | Databricks Analysts group. |
 | <a name="output_group_read_name"></a> [group\_read\_name](#output\_group\_read\_name) | Databricks Read group name. |
-| <a name="output_job_policy_id"></a> [job\_policy\_id](#output\_job\_policy\_id) | The job policy ID if defined, else null. |
-| <a name="output_job_policy_key"></a> [job\_policy\_key](#output\_job\_policy\_key) | The job policy key if defined, else null. |
-| <a name="output_job_policy_name"></a> [job\_policy\_name](#output\_job\_policy\_name) | The job policy name if defined, else null. |
+| <a name="output_job_policy_id"></a> [job\_policy\_id](#output\_job\_policy\_id) | The job policy ID if defined, else null. If unity\_permissions\_migration is true, it will return the ID for the policy without Unity. |
+| <a name="output_job_policy_id_unity"></a> [job\_policy\_id\_unity](#output\_job\_policy\_id\_unity) | The job policy ID if defined, else null. |
+| <a name="output_job_policy_key"></a> [job\_policy\_key](#output\_job\_policy\_key) | The job policy key if defined, else null. If unity\_permissions\_migration is true, it will return the ID for the policy without Unity. |
+| <a name="output_job_policy_key_unity"></a> [job\_policy\_key\_unity](#output\_job\_policy\_key\_unity) | The job policy key if defined, else null. |
+| <a name="output_job_policy_name"></a> [job\_policy\_name](#output\_job\_policy\_name) | The job policy name if defined, else null. If unity\_permissions\_migration is true, it will return the ID for the policy without Unity. |
+| <a name="output_job_policy_name_unity"></a> [job\_policy\_name\_unity](#output\_job\_policy\_name\_unity) | The job policy name if defined, else null. |
 | <a name="output_policy_ids"></a> [policy\_ids](#output\_policy\_ids) | Map of the policy IDs that have been created. The key is the policy key and the value is the policy ID. |
 | <a name="output_pool_databricks_runtime"></a> [pool\_databricks\_runtime](#output\_pool\_databricks\_runtime) | The pools' Databricks runtime version. |
 | <a name="output_pool_spot_ids"></a> [pool\_spot\_ids](#output\_pool\_spot\_ids) | The warm pool id |

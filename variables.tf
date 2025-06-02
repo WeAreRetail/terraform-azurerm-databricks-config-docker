@@ -39,8 +39,8 @@ variable "databricks_policies" {
       IMAGE_NAME         = string
       IS_JOB_POLICY      = optional(bool, false)
       POLICY_NAME        = string
-      POOL               = optional(bool, false)
       POLICY_OVERRIDES   = optional(any, {})
+      POOL               = optional(bool, false)
     }
   ))
   description = "The Databricks clusters policies."
