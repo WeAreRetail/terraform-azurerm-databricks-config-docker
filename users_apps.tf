@@ -72,11 +72,11 @@ data "azuread_service_principals" "admin_unity" {
 
 
 locals {
-  app_admin_var_map   = var.unity_permissions_migration ? { for k, v in data.azuread_service_principals.admin[0].service_principals : v.application_id => v.display_name } : {}
-  app_admin_unity_map = var.unity_permissions ? { for k, v in data.azuread_service_principals.admin_unity[0].service_principals : v.application_id => v.display_name } : {}
+  app_admin_var_map   = var.unity_permissions_migration ? { for k, v in data.azuread_service_principals.admin[0].service_principals : v.client_id => v.display_name } : {}
+  app_admin_unity_map = var.unity_permissions ? { for k, v in data.azuread_service_principals.admin_unity[0].service_principals : v.client_id => v.display_name } : {}
 
-  app_read_map = var.add_apps_in_groups && var.unity_permissions_migration ? { for k, v in data.azuread_service_principals.read[0].service_principals : v.application_id => v.display_name } : {}
-  app_user_map = var.add_apps_in_groups && var.unity_permissions_migration ? { for k, v in data.azuread_service_principals.user[0].service_principals : v.application_id => v.display_name } : {}
+  app_read_map = var.add_apps_in_groups && var.unity_permissions_migration ? { for k, v in data.azuread_service_principals.read[0].service_principals : v.client_id => v.display_name } : {}
+  app_user_map = var.add_apps_in_groups && var.unity_permissions_migration ? { for k, v in data.azuread_service_principals.user[0].service_principals : v.client_id => v.display_name } : {}
 
   app_admin_map = merge(
     local.app_admin_var_map,

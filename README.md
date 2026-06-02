@@ -12,8 +12,7 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.0 |
-| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | >= 2.0.0 |
-| <a name="requirement_azurecaf"></a> [azurecaf](#requirement\_azurecaf) | >= 1.2.16 |
+| <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | >= 3.0.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.0.2 |
 | <a name="requirement_databricks"></a> [databricks](#requirement\_databricks) | >= 1.0.0 |
 
