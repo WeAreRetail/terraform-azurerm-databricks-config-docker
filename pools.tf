@@ -8,17 +8,21 @@ locals {
 
 module "pools" {
   source   = "WeAreRetail/databricks-pools-docker/azurerm"
-  version  = "2.0.0"
+  version  = "2.1.0"
   for_each = var.pools
 
-  databricks_version       = local.pool_databricks_policy["DATABRICKS_VERSION"]
-  docker_image_url         = "${var.acr_url}/${local.pool_databricks_policy["IMAGE_NAME"]}:${lower(var.environment)}-current"
-  docker_spn_client_id     = var.acr_uses_application_spn ? "{{secrets/security/spn-id}}" : "{{secrets/registry/acr-username}}"
-  docker_spn_client_secret = var.acr_uses_application_spn ? "{{secrets/security/acr-secret}}" : "{{secrets/registry/acr-password}}"
-  spot_pool_max_capacity   = each.value.spot_pool_max_capacity
-  spot_pool_name           = each.value.spot_pool_name
-  spot_pool_sku            = each.value.spot_pool_sku
-  warm_pool_max_capacity   = each.value.warm_pool_max_capacity
-  warm_pool_name           = each.value.warm_pool_name
-  warm_pool_sku            = each.value.warm_pool_sku
+  databricks_version                              = local.pool_databricks_policy["DATABRICKS_VERSION"]
+  docker_image_url                                = "${var.acr_url}/${local.pool_databricks_policy["IMAGE_NAME"]}:${lower(var.environment)}-current"
+  docker_spn_client_id                            = var.acr_uses_application_spn ? "{{secrets/security/spn-id}}" : "{{secrets/registry/acr-username}}"
+  docker_spn_client_secret                        = var.acr_uses_application_spn ? "{{secrets/security/acr-secret}}" : "{{secrets/registry/acr-password}}"
+  spot_pool_max_capacity                          = each.value.spot_pool_max_capacity
+  spot_pool_name                                  = each.value.spot_pool_name
+  spot_pool_sku                                   = each.value.spot_pool_sku
+  warm_pool_max_capacity                          = each.value.warm_pool_max_capacity
+  warm_pool_name                                  = each.value.warm_pool_name
+  warm_pool_sku                                   = each.value.warm_pool_sku
+  spot_pool_idle_instance_autotermination_minutes = each.value.spot_pool_idle_instance_autotermination_minutes
+  spot_pool_min_idle_instances                    = each.value.spot_pool_min_idle_instances
+  warm_pool_idle_instance_autotermination_minutes = each.value.warm_pool_idle_instance_autotermination_minutes
+  warm_pool_min_idle_instances                    = each.value.warm_pool_min_idle_instances
 }

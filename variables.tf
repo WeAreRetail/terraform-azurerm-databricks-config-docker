@@ -140,12 +140,16 @@ variable "logs_path" {
 variable "pools" {
   description = "Pool definition."
   type = map(object({
-    spot_pool_max_capacity = number
-    spot_pool_name         = string
-    spot_pool_sku          = string
-    warm_pool_max_capacity = number
-    warm_pool_name         = string
-    warm_pool_sku          = string
+    spot_pool_max_capacity                          = number
+    spot_pool_name                                  = string
+    spot_pool_sku                                   = string
+    warm_pool_max_capacity                          = number
+    warm_pool_name                                  = string
+    warm_pool_sku                                   = string
+    spot_pool_idle_instance_autotermination_minutes = optional(number, 10)
+    spot_pool_min_idle_instances                    = optional(number, 0)
+    warm_pool_idle_instance_autotermination_minutes = optional(number, 10)
+    warm_pool_min_idle_instances                    = optional(number, 0)
   }))
 }
 
